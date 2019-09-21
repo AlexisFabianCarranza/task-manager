@@ -9,7 +9,6 @@ import Paper from '@material-ui/core/Paper';
 export default class HomeUI extends Component{
     showTasks = (state) => {
         return this.props.tasks.map((task,index) => {
-            console.log(task)
             if (task.state === state){
                 return (
                     <Grid key={index} item>

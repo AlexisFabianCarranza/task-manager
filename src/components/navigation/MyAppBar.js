@@ -7,7 +7,7 @@ export default class MyAppBar extends Component {
     render(){
         return(
             <AppBar 
-                title="Tasks"
+                title="Task Manager"
                 style={{"backgroundColor": indigo600}}
             />
         )
