@@ -3,6 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Title from '../Title';
 import Select from '@material-ui/core/Select';
+import States from '../../utilities/states';
 
 export default class TaskUI extends Component {
     constructor(props){
@@ -10,7 +11,7 @@ export default class TaskUI extends Component {
         this.state = {
             title: '',
             description: '',
-            state: 'To do'
+            state: States.toDo
         }
     }
     submit = () => {
@@ -47,9 +48,9 @@ export default class TaskUI extends Component {
                             id: 'filled-age-native-simple',
                         }}
                         >
-                            <option value={"To Do"}>To Do</option>
-                            <option value={"In Progress"}>In Progress</option>
-                            <option value={"Done"}>Done</option>
+                            <option value={States.toDo}>{States.toDo}</option>
+                            <option value={States.inProgress}>{States.inProgress}</option>
+                            <option value={States.done}>{States.done}}</option>
                         </Select>
                     <div>
                         <Button 

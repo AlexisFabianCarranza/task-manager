@@ -20,3 +20,23 @@
 .App-link {
   color: #09d3ac;
 }
+
+.left-out-enter{
+  opacity:0;
+  transform: translateX(100%);
+}
+
+.left-out-enter-active{
+  opacity:1;
+  transform: translateX(0);
+}
+
+.left-out-exit {
+  opacity:0;
+  transform: translateX(100%);
+}
+
+.left-out-exit-active {
+  opacity: 0;
+  transform: translateX(0);
+}

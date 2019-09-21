@@ -20,10 +20,10 @@ export default class TaskCard extends Component {
                     />
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="h2">
-                            Titulo de la tarea via props
+                            {this.props.title}
                         </Typography>
                         <Typography variant="body2" color="textSecondary" component="p">
-                            Descripcion de la tarea via prop
+                            {this.props.description}
                         </Typography>
                     </CardContent>
                 </CardActionArea>

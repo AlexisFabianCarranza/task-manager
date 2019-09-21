@@ -3,28 +3,54 @@ import '../styles/basic.css';
 import States from '../utilities/states';
 import Title from './Title';
 import TaskCard from '../components/tasks/TaskCard';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 
 export default class HomeUI extends Component{
-    componentDidMount(){
-        console.log(States);
-    }
-    findTaks = (state) => {
-        return <TaskCard />
+    showTasks = (state) => {
+        return this.props.tasks.map((task,index) => {
+            console.log(task)
+            if (task.state === state){
+                return (
+                    <Grid key={index} item>
+                        <Paper>
+                            <TaskCard 
+                                title={task.title}
+                                description={task.description}
+                            />
+                        </Paper>
+                    </Grid>
+                )
+            }
+                
+        })
     }
     render(){
         return(
             <div className='table'>
                 <div className='tableDivisor'>
                     <Title title={States.toDo}/>
-                    {this.findTaks(States.toDo)}
+                    <Grid item xs={4}>
+                            <Grid >
+                            {this.showTasks(States.toDo)}
+                           </Grid>
+                    </Grid> 
                 </div>
                 <div className='tableDivisor'>
                     <Title title={States.inProgress}/>
-                    {this.findTaks(States.inProgress)}
+                    <Grid item xs={4}>
+                            <Grid >
+                            {this.showTasks(States.inProgress)}
+                           </Grid>
+                    </Grid> 
                 </div>
                 <div className='tableDivisor'>
                     <Title title={States.done}/>
-                    {this.findTaks(States.done)}
+                    <Grid item xs={4}>
+                            <Grid >
+                            {this.showTasks(States.done)}
+                           </Grid>
+                    </Grid> 
                 </div>
             </div>
         )
