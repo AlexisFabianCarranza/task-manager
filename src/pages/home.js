@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
-import FlatButton from 'material-ui/FlatButton';
+import HomeUI from '../components/HomeUI';
 
 export default class Home extends Component {
     render(){
         return(
-            <div >
-                <FlatButton secondary={true}label="Que onda"/>
-            </div>
+            <HomeUI />
         )
     }
 }

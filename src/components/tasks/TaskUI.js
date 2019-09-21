@@ -13,11 +13,14 @@ export default class TaskUI extends Component {
             state: 'To do'
         }
     }
+    submit = () => {
+        this.props.saveTask(this.state);
+    }
     render(){
         return(
             <div >
                 <div>
-                    <Title textTitle={'Add Task'}/>
+                    <Title title={'Add Task'}/>
                 </div>
                 <div>
                     <TextField
@@ -25,7 +28,7 @@ export default class TaskUI extends Component {
                         label="Title"
                         margin="normal"
                         value={this.state.title}
-                        onChange={(title)=>{this.setState({title})}}
+                        onChange={(text) => this.setState({title: text.target.value})}
                     />
                     <TextField
                         label="Description"
@@ -33,12 +36,12 @@ export default class TaskUI extends Component {
                         rows="4"
                         margin="normal"
                         value={this.state.description}
-                        onChange={(description)=>{this.setState({description})}}
+                        onChange={(text) => this.setState({description: text.target.value})}
                     />    
                     <Select
                         native
                         value={this.state.state}
-                        onChange={(state)=>{this.setState({state})}}
+                        onChange={(text)=> this.setState({state: text.target.value})}
                         inputProps={{
                             name: 'state',
                             id: 'filled-age-native-simple',
@@ -52,7 +55,7 @@ export default class TaskUI extends Component {
                         <Button 
                             variant="contained" 
                             color="secondary"
-                            onClick={()=>this.props.save(this.state)}
+                            onClick={this.submit}
                         >
                             Create Task
                         </Button>
