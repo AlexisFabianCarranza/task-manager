@@ -8,8 +8,10 @@ class App extends Component {
   render(){
     return (
       <MuiThemeProvider>
-        <MyAppBar />
-        {this.props.children}
+        <div>
+          <MyAppBar />
+          {this.props.children}
+        </div>
       </MuiThemeProvider> 
     );
   }
