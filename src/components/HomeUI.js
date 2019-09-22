@@ -18,7 +18,8 @@ const useStyles = makeStyles(theme => ({
       overflow: 'auto',
       display: 'flex',
       flex: 1,
-      flexFlow: 'column'
+      flexFlow: 'column',
+      backgroundColor: 'inherit',
     },
     listSection: {
       backgroundColor: 'inherit',
