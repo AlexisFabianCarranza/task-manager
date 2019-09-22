@@ -19,14 +19,21 @@ export default class TaskUI extends Component {
             state: States.toDo
         }
     }
+    componentWillReceiveProps(props){
+        this.setState({
+            title: (this.props.taskTitle) ? this.props.taskTitle : '',
+            description: (this.props.taskDescription) ? this.props.taskDescription : '',
+            state:  (this.props.taskState) ? this.props.taskState : States.toDo,
+        })
+    }
     submit = () => {
-        this.props.saveTask(this.state);
+        this.props.mainAction(this.state);
     }
     render(){
         return(
             <div className={'container'}>
                 <div className={'container-form'}>
-                    <Title title={'Add Task'}/>
+                    <Title title={this.props.title}/>
                     <TextField
                         className="text-field"
                         variant="outlined"
@@ -64,7 +71,7 @@ export default class TaskUI extends Component {
                             color="secondary"
                             onClick={this.submit}
                         >
-                             Create Task
+                            {this.props.textButton}
                         </Button>
                     </div>    
                     

@@ -8,8 +8,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import '../../styles/task.css';
 
-export default class TaskCard extends Component {
-    render(){
+export default (props) => {
         return(
             <Card >
                 <CardActionArea>
@@ -18,24 +17,26 @@ export default class TaskCard extends Component {
                         image="/static/images/cards/contemplative-reptile.jpg"
                         title="Contemplative Reptile"
                     />
-                    <CardContent>
-                        <Typography gutterBottom variant="h5" component="h2">
-                            {this.props.title}
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                            {this.props.description}
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
-                <CardActions>
-                    <Button size="small" color="primary">
-                        Eliminar
-                    </Button>
-                    <Button size="small" color="primary">
-                        Editar
-                    </Button>
-                </CardActions>
-            </Card>
-        )
-    }
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="h2">
+                        {props.title}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        {props.description}
+                    </Typography>
+                </CardContent>
+            </CardActionArea>
+            <CardActions>
+                <Button onClick={()=>props.taskUpdate(props.id, props.state,'next')}size="small" color="primary">
+                    Siguiente
+                </Button>
+                <Button onClick={()=>props.taskUpdate(props.id, props.state,'previous')}size="small" color="primary">
+                    atras
+                </Button>
+                <Button size="small" color="primary">
+                    Editar
+                </Button>
+            </CardActions>
+        </Card>
+    )
 }

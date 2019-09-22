@@ -38,10 +38,13 @@ export default (props) =>{
         return props.tasks.map(task => {
             if (task.state == state) {
                 return (
-                    <div className={classes.card}>
+                    <div className={classes.card} key={task.id}>
                         <TaskCard 
+                            id={task.id}
+                            taskUpdate={props.taskUpdate}
                             title={task.title}
                             description={task.description}
+                            state={task.state}
                         />
                     </div>
                 )
@@ -55,21 +58,26 @@ export default (props) =>{
                 <div className='tasks'>
                     <Title title={States.toDo}/>
                     <List className={classes.root} subheader={<li />}>
-                            {showTasks(States.toDo)}
-                        </List>
-                    </div>
-                </div>
-                <div className='tableDivisor'>
-                    <div className='tasks'>
-                        <Title title={States.inProgress}/>
-                    </div>
-                    
-                </div>
-                <div className='tableDivisor'>
-                    <div className='tasks'>
-                        <Title title={States.done}/>
-                    </div>
+                        {showTasks(States.toDo)}
+                    </List>
                 </div>
             </div>
+            <div className='tableDivisor'>
+                <div className='tasks'>
+                    <Title title={States.inProgress}/>
+                    <List className={classes.root} subheader={<li />}>
+                        {showTasks(States.inProgress)}
+                    </List>
+                </div>
+            </div>
+            <div className='tableDivisor'>
+                <div className='tasks'>
+                    <Title title={States.done}/>
+                    <List className={classes.root} subheader={<li />}>
+                        {showTasks(States.done)}
+                    </List>
+                </div>
+            </div>
+        </div>
         )
 }

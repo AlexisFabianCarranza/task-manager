@@ -1,5 +1,8 @@
-export default {
+let state = {
     toDo: 'To Do',
     inProgress: 'In Progress',
-    done: 'Done'
+    done: 'Done',
+    arrayStates: function(){return [this.toDo, this.inProgress, this.done]}
 }
+
+export default state;
