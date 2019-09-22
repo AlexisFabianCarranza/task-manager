@@ -5,7 +5,7 @@ import Title from '../Title';
 import Select from '@material-ui/core/Select';
 import MenuItem from "@material-ui/core/MenuItem";
 import States from '../../utilities/states';
-import '../../styles/basic.css';
+import '../../styles/task.css';
 import InputLabel from "@material-ui/core/InputLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";

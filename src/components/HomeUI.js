@@ -1,57 +1,74 @@
 import React, {Component} from 'react';
-import '../styles/basic.css';
 import States from '../utilities/states';
 import Title from './Title';
 import TaskCard from '../components/tasks/TaskCard';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import { makeStyles } from '@material-ui/core/styles';
+import '../styles/home.css';
 
-export default class HomeUI extends Component{
-    showTasks = (state) => {
-        return this.props.tasks.map((task,index) => {
-            if (task.state === state){
+const useStyles = makeStyles(theme => ({
+    root: {
+      width: '100%',
+      maxWidth: 360,
+      backgroundColor: theme.palette.background.paper,
+      position: 'relative',
+      overflow: 'auto',
+      display: 'flex',
+      flex: 1,
+      flexFlow: 'column'
+    },
+    listSection: {
+      backgroundColor: 'inherit',
+    },
+    ul: {
+      backgroundColor: 'inherit',
+      padding: 0,
+    },
+    card: {
+        padding: '2%'
+    }
+  }));
+
+export default (props) =>{
+    let showTasks = (state) => {
+        return props.tasks.map(task => {
+            if (task.state == state) {
                 return (
-                    <Grid key={index} item>
-                        <Paper>
-                            <TaskCard 
-                                title={task.title}
-                                description={task.description}
-                            />
-                        </Paper>
-                    </Grid>
+                    <div className={classes.card}>
+                        <TaskCard 
+                            title={task.title}
+                            description={task.description}
+                        />
+                    </div>
                 )
             }
-                
         })
-    }
-    render(){
-        return(
-            <div className='table'>
-                <div className='tableDivisor'>
+    };
+    const classes = useStyles();
+    return(
+        <div className='container'>
+            <div className='tableDivisor'>
+                <div className='tasks'>
                     <Title title={States.toDo}/>
-                    <Grid item xs={4}>
-                            <Grid >
-                            {this.showTasks(States.toDo)}
-                           </Grid>
-                    </Grid> 
+                    <List className={classes.root} subheader={<li />}>
+                            {showTasks(States.toDo)}
+                        </List>
+                    </div>
                 </div>
                 <div className='tableDivisor'>
-                    <Title title={States.inProgress}/>
-                    <Grid item xs={4}>
-                            <Grid >
-                            {this.showTasks(States.inProgress)}
-                           </Grid>
-                    </Grid> 
+                    <div className='tasks'>
+                        <Title title={States.inProgress}/>
+                    </div>
+                    
                 </div>
                 <div className='tableDivisor'>
-                    <Title title={States.done}/>
-                    <Grid item xs={4}>
-                            <Grid >
-                            {this.showTasks(States.done)}
-                           </Grid>
-                    </Grid> 
+                    <div className='tasks'>
+                        <Title title={States.done}/>
+                    </div>
                 </div>
             </div>
         )
-    }
 }

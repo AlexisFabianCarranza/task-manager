@@ -6,12 +6,12 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import '../../styles/basic.css';
+import '../../styles/task.css';
 
 export default class TaskCard extends Component {
     render(){
         return(
-            <Card className='card'>
+            <Card >
                 <CardActionArea>
                     <CardMedia
                         style={{height: 30}}
@@ -29,10 +29,10 @@ export default class TaskCard extends Component {
                 </CardActionArea>
                 <CardActions>
                     <Button size="small" color="primary">
-                    Eliminar
+                        Eliminar
                     </Button>
                     <Button size="small" color="primary">
-                    Editar
+                        Editar
                     </Button>
                 </CardActions>
             </Card>
