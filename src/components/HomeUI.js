@@ -3,9 +3,6 @@ import States from '../utilities/states';
 import Title from './Title';
 import TaskCard from '../components/tasks/TaskCard';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import { makeStyles } from '@material-ui/core/styles';
 import '../styles/home.css';
 
@@ -20,13 +17,6 @@ const useStyles = makeStyles(theme => ({
       flex: 1,
       flexFlow: 'column',
       backgroundColor: 'inherit',
-    },
-    listSection: {
-      backgroundColor: 'inherit',
-    },
-    ul: {
-      backgroundColor: 'inherit',
-      padding: 0,
     },
     card: {
         padding: '2%'

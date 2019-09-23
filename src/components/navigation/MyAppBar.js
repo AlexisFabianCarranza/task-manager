@@ -18,7 +18,7 @@ export default class MyAppBar extends Component {
 }*/
 import React, {Component} from 'react';
 import AppBar from '@material-ui/core/AppBar';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
@@ -26,6 +26,7 @@ import Typography from '@material-ui/core/Typography';
 import {Link} from 'react-router-dom';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -36,16 +37,20 @@ const useStyles = makeStyles(theme => ({
     },
     title: {
       display: 'none',
+      color: '#FFFFFF',
       [theme.breakpoints.up('sm')]: {
         display: 'block',
       },
     },
-    containerItems: {
+    containerItemsRight: {
       display: 'flex',
       flexDirection: 'row-reverse',
       flex: 1,
       paddingRight: '7%',
     },
+    containerItemsLeft: {
+      paddingLeft: '3%',
+    }
   }));
 
 export default (props) => {
@@ -60,15 +65,24 @@ export default (props) => {
                     color="inherit"
                     aria-label="open drawer"
                 >
-                    <MenuIcon />
+                    <MenuIcon style={{color: '#FFFFFF'}}/>
                 </IconButton>
-                <Typography className={classes.title} variant="h6" noWrap>
-                  Task Manager
-                </Typography>
-                <div className={classes.containerItems}>
+                <Link to='/' style={{textDecoration: 'none', color:'inherit'}}>
+                  <Typography className={classes.title} variant="h6" noWrap>
+                    Task Manager
+                  </Typography>
+                </Link>
+                <div className={classes.containerItemsLeft}>
+                  <Link to='/'>
+                    <HomeRoundedIcon style={{color: '#FFFFFF'}}/>
+                  </Link>
+                  
+                </div>
+                <div className={classes.containerItemsRight}>
+                  
                   <Link to='/AddTask'>
-                    <Fab color="secondary" aria-label="add" >
-                      <AddIcon />
+                    <Fab color="secondary" aria-label="add" size="small" >
+                      <AddIcon style={{color: '#FFFFFF'}}/>
                     </Fab>
                   </Link>                    
                   

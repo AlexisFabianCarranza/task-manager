@@ -5,10 +5,9 @@ import Title from '../Title';
 import Select from '@material-ui/core/Select';
 import MenuItem from "@material-ui/core/MenuItem";
 import States from '../../utilities/states';
+import {Link} from 'react-router-dom';
 import '../../styles/task.css';
-import InputLabel from "@material-ui/core/InputLabel";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import FormControl from "@material-ui/core/FormControl";
+
 
 export default class TaskUI extends Component {
     constructor(props){
@@ -65,14 +64,17 @@ export default class TaskUI extends Component {
                             <MenuItem value={States.inProgress}>{States.inProgress}</MenuItem>
                             <MenuItem value={States.done}>{States.done}</MenuItem>
                         </Select>
-                        <Button 
-                            className='button'
-                            variant="contained" 
-                            color="secondary"
-                            onClick={this.submit}
-                        >
-                            {this.props.textButton}
-                        </Button>
+                        <Link to='/' style={{textDecoration: 'none'}}>
+                            <Button 
+                                className='button'
+                                variant="contained" 
+                                color="secondary"
+                                onClick={this.submit}
+                            >
+                                {this.props.textButton}
+                            </Button>
+                        </Link>
+                        
                     </div>    
                     
                 </div>
