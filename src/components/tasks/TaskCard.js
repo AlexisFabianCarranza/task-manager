@@ -3,13 +3,14 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import ArrowForwardRoundedIcon from '@material-ui/icons/ArrowForwardRounded';
 import CreateRoundedIcon from '@material-ui/icons/CreateRounded';
+import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import {Link} from 'react-router-dom';
 import '../../styles/task.css';
 
@@ -28,7 +29,16 @@ const useStyles = makeStyles(theme => ({
         textAlign: 'center',
         fontSize: '130%'
     },
-    
+    leftIcons: {
+        display: 'flex',
+        flex:1,
+        flexFlow: 'row-reverse',
+    },
+    rightIcons: {
+        display: 'flex',
+        flex:1,
+        flexFlow: 'row',
+    }
   }));
 
 export default (props) => {
@@ -69,13 +79,32 @@ export default (props) => {
                     </CardContent>
                 </CardActionArea>
                 <CardActions>
-                    <Link to='/updateTask'>
+                    <div className={classes.rightIcons}>
+                        <Link to={'/updateTask?idTask='+ props.id} >
+                            <IconButton
+                                    color="inherit"
+                                    style={{color: '#000000'}}
+                                >
+                                <CreateRoundedIcon></CreateRoundedIcon>
+                            </IconButton>
+                        </Link> 
                         <IconButton
-                                color="inherit"
+                            color="inherit"
+                            style={{color: '#000000'}}
+                            onClick={()=>props.archivingTask(props.id)}
                             >
-                            <CreateRoundedIcon></CreateRoundedIcon>
+                            <SaveAltIcon></SaveAltIcon>
                         </IconButton>
-                    </Link> 
+                    </div>
+                    <div className={classes.leftIcons}>
+                        <IconButton
+                            color="inherit"
+                            onClick={()=>props.removeTask(props.id)}
+                        >
+                            <DeleteIcon />
+                        </IconButton>
+                    </div>
+                    
                     
                 </CardActions>
         </Card>

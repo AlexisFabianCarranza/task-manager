@@ -5,6 +5,10 @@ import firebase from 'firebase';
 export default class UpdateTask extends Component {
     componentDidMount(){
         this.db = firebase.firestore();
+        console.log('Se imprimio');
+        var url = new URL(window.location.href);
+        var idTask = url.searchParams.get("idTask");
+        console.log(idTask);
     }
     updateTask = async (task) => {
         try{

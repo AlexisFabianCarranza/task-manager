@@ -27,7 +27,19 @@ export default class Home extends Component {
                     case 'modified':
                             this.setState({
                                 tasks: this.state.tasks.concat({...changeDoc.doc.data() ,id: changeDoc.doc.id})
-                            });                    
+                            }); 
+                            //Filtro para el archivado de la tarea
+                            if (changeDoc.doc.data().archived) {
+                                this.setState({
+                                    tasks: this.state.tasks.filter((task) => {
+                                        if (task.id == changeDoc.doc.id && !task.archived){
+                                            return false;
+                                        }
+                                        return true;
+                                    })
+                                });
+                            }
+                            //Filtro para el cambio de estado de la tarea                   
                             this.setState({
                                 tasks: this.state.tasks.filter((task) => {
                                     if (task.id == changeDoc.doc.id && task.state != changeDoc.doc.data().state){
@@ -68,13 +80,25 @@ export default class Home extends Component {
         }catch(err){
             console.log(err);
         }
-        
+    }
+    removeTask = async (taskId) => {
+        var taskRef = await this.db.collection('tasks').doc(taskId).delete()
+            .then(() => console.log('Se elimino correctamente'))
+            .catch((err) => console.log(err));
+    }
+    archivingTask = async (taskId) => {
+        var taskRef = await this.db.collection('tasks').doc(taskId)
+            .set({archived: true}, { merge: true })
+            .then(() => console.log('Se archivo correctamente'))
+            .catch((err)  => console.log(err));
     }
     render(){
         return(
             <HomeUI 
                 tasks={this.state.tasks}
                 taskUpdate={this.taskUpdate}    
+                removeTask={this.removeTask}
+                archivingTask={this.archivingTask}
             />
         )
     }

@@ -8,7 +8,7 @@ export default class AddTask extends Component {
     }
     saveTask = async (task) => {
         try{
-            await this.db.collection('tasks').add(task)
+            await this.db.collection('tasks').add({...task, archived: false})
             console.log("Se almaceno correctamente la tarea");
         }catch(err){
             console.log(err);
