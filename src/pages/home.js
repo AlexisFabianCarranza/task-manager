@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import HomeUI from '../components/HomeUI';
 import firebase from 'firebase';
 import States from '../utilities/states';
+import {connect} from 'react-redux';
 
 export default class Home extends Component {
     constructor(props) {
@@ -104,3 +105,11 @@ export default class Home extends Component {
     }
 }
 
+function mapStateToProps(state, ownProps){
+    return {
+        tasks: state.tasks
+    }
+}
+export default connect(
+
+)(Home);
