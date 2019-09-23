@@ -26,7 +26,6 @@ const useStyles = makeStyles(theme => ({
 export default (props) =>{
     let showTasks = (state) => {
         return props.tasks.map(task => {
-            console.log(task);
             if (task.state == state && task.archived == false) {
                 return (
                     <div className={classes.card} key={task.id}>
