@@ -8,7 +8,10 @@ export default class Home extends Component {
         super(props);
         this.state = {
             tasks: []
-        }
+        };
+        console.log('Hola');
+        console.log(this.props.tasks);
+
     }
     componentDidMount(){
         this.db = firebase.firestore();
@@ -103,3 +106,4 @@ export default class Home extends Component {
         )
     }
 }
+
