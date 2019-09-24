@@ -1,6 +1,7 @@
-import React,{Component} from 'react';
+import React from 'react';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
+import DoneAllIcon from '@material-ui/icons/DoneAll';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -10,7 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import ArrowForwardRoundedIcon from '@material-ui/icons/ArrowForwardRounded';
 import CreateRoundedIcon from '@material-ui/icons/CreateRounded';
-import SaveAltIcon from '@material-ui/icons/SaveAlt';
+import States from '../../utilities/states';
 import {Link} from 'react-router-dom';
 import '../../styles/task.css';
 
@@ -48,10 +49,11 @@ export default (props) => {
                 <div className={classes.container}>
                     <CardActions>
                         <IconButton
-                            color="inherit"
+                            disabled={(States.arrayStates().indexOf(props.state)=== 0) ? true: false}
+                            color={"inherit" }
                             onClick={()=>props.taskUpdate(props.id, props.state,'previous')}
                         >
-                            <ArrowBackRoundedIcon ></ArrowBackRoundedIcon>
+                            <ArrowBackRoundedIcon></ArrowBackRoundedIcon>
                         </IconButton>
                     </CardActions>
                     <CardActionArea>
@@ -64,6 +66,7 @@ export default (props) => {
                     
                     <CardActions>
                         <IconButton
+                            disabled={(States.arrayStates().indexOf(props.state)=== States.arrayStates().length-1) ? true: false}
                             color="inherit"
                             onClick={()=>props.taskUpdate(props.id, props.state,'next')}
                         >
@@ -93,7 +96,7 @@ export default (props) => {
                             style={{color: '#000000'}}
                             onClick={()=>props.archivingTask(props.id)}
                             >
-                            <SaveAltIcon></SaveAltIcon>
+                            <DoneAllIcon></DoneAllIcon>
                         </IconButton>
                     </div>
                     <div className={classes.leftIcons}>

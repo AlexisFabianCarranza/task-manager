@@ -74,7 +74,9 @@ export default (props) => {
                 </Link>
                 <div className={classes.containerItemsLeft}>
                   <Link to='/'>
-                    <HomeRoundedIcon style={{color: '#FFFFFF'}}/>
+                    <IconButton>
+                      <HomeRoundedIcon style={{color: '#FFFFFF'}}/>
+                    </IconButton>
                   </Link>
                   
                 </div>

@@ -5,9 +5,8 @@ import Title from '../Title';
 import Select from '@material-ui/core/Select';
 import MenuItem from "@material-ui/core/MenuItem";
 import States from '../../utilities/states';
-import {Link} from 'react-router-dom';
+import { Redirect } from 'react-router';
 import '../../styles/task.css';
-
 
 export default class TaskUI extends Component {
     constructor(props){
@@ -15,32 +14,55 @@ export default class TaskUI extends Component {
         this.state = {
             title: '',
             description: '',
-            state: States.toDo
-        }
+            state: States.toDo,
+            id: '',
+            validTitle: true,
+            redirectHome: false,
+        };
     }
-    componentWillReceiveProps(props){
+    componentWillReceiveProps(nextProps){
         this.setState({
-            title: (this.props.taskTitle) ? this.props.taskTitle : '',
-            description: (this.props.taskDescription) ? this.props.taskDescription : '',
-            state:  (this.props.taskState) ? this.props.taskState : States.toDo,
-        })
+            title: (nextProps.taskTitle) ? nextProps.taskTitle : '',
+            description: (nextProps.taskDescription) ? nextProps.taskDescription : '',
+            state:  (nextProps.taskState) ? nextProps.taskState : States.toDo,
+            id: (nextProps.taskId) ? nextProps.taskId : '',
+        });
     }
     submit = () => {
+        if ( !this.state.title || this.state.title.length > 30 ){
+            this.setState({
+                validTitle: false
+            });
+            return;
+        }
         this.props.mainAction(this.state);
+        this.setState({
+            redirectHome: true,
+        });
     }
     render(){
+        if (this.state.redirectHome){
+            return <Redirect push to="/" />;
+        }
         return(
             <div className={'container'}>
                 <div className={'container-form'}>
                     <Title title={this.props.title}/>
                     <TextField
+                        helperText={(this.state.validTitle) ? '' : 'Required. Max lenght 30 letters'}
+                        error = {(this.state.validTitle) ? '' : 'error'}
                         className="text-field"
                         variant="outlined"
                         required
                         label="Title"
                         margin="normal"
+                        defaultValue="foo"
                         value={this.state.title}
-                        onChange={(text) => this.setState({title: text.target.value})}
+                        onChange={(text) => {
+                            this.setState({title: text.target.value});
+                            this.setState({validTitle: true});
+    
+                        }}
                     />
                     <TextField
                         variant="outlined"
@@ -64,17 +86,14 @@ export default class TaskUI extends Component {
                             <MenuItem value={States.inProgress}>{States.inProgress}</MenuItem>
                             <MenuItem value={States.done}>{States.done}</MenuItem>
                         </Select>
-                        <Link to='/' style={{textDecoration: 'none'}}>
-                            <Button 
-                                className='button'
-                                variant="contained" 
-                                color="secondary"
-                                onClick={this.submit}
-                            >
-                                {this.props.textButton}
-                            </Button>
-                        </Link>
-                        
+                        <Button 
+                            className='button'
+                            variant="contained" 
+                            color="secondary"
+                            onClick={this.submit}
+                        >
+                            {this.props.textButton}
+                        </Button>
                     </div>    
                     
                 </div>
@@ -82,3 +101,8 @@ export default class TaskUI extends Component {
         )
     }
 }
+/*
+<Link to='/' style={{textDecoration: 'none'} }>
+                            
+                        </Link>
+*/

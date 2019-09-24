@@ -4,8 +4,6 @@ import firebase from 'firebase';
 import './index.css';
 import Router from './Router';
 import * as serviceWorker from './serviceWorker';
-import configureStore from './store/configureStore';
-import {Provider} from 'react-redux';
 
 firebase.initializeApp({
     apiKey: "AIzaSyAVjxq45FPWeKIBGGM83uc8r2KLsobTRMc",
@@ -17,9 +15,8 @@ firebase.initializeApp({
     appId: "1:908873785787:web:c5af477d3fefd69a45a49e"
 })
 
-const store = configureStore();
 ReactDOM.render(
-    <Provider store={store}><Router /></Provider>, 
+    <Router />, 
     document.getElementById('root')
 );
 
