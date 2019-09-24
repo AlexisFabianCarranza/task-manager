@@ -2,14 +2,15 @@ import React, {Component} from 'react';
 import HomeUI from '../components/HomeUI';
 import firebase from 'firebase';
 import States from '../utilities/states';
+import {connect} from 'react-redux';
 
-export default class Home extends Component {
+class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
             tasks: []
         };
-
+        console.log(this.props)
     }
     componentDidMount(){
         this.db = firebase.firestore();
@@ -110,3 +111,9 @@ export default class Home extends Component {
     }
 }
 
+function mapStateToProps(state, ownProps){
+    return {
+        tasks: state.tasks
+    }
+}
+export default connect(mapStateToProps)(Home);
