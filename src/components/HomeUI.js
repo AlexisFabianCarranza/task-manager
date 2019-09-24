@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React from 'react';
 import States from '../utilities/states';
-import Title from './Title';
+import Title from './utilites/Title';
 import TaskCard from '../components/tasks/TaskCard';
 import List from '@material-ui/core/List';
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,7 +10,6 @@ const useStyles = makeStyles(theme => ({
     root: {
       width: '100%',
       maxWidth: 360,
-      backgroundColor: theme.palette.background.paper,
       position: 'relative',
       overflow: 'auto',
       display: 'flex',
@@ -26,16 +25,13 @@ const useStyles = makeStyles(theme => ({
 export default (props) =>{
     let showTasks = (state) => {
         return props.tasks.map(task => {
-            if (task.state == state && task.archived == false) {
+            if (task.state === state && task.archived === false) {
                 return (
                     <div className={classes.card} key={task.id}>
                         <TaskCard 
-                            id={task.id}
                             taskUpdate={props.taskUpdate}
                             removeTask={props.removeTask}
-                            title={task.title}
-                            description={task.description}
-                            state={task.state}
+                            task={task}
                             archivingTask={props.archivingTask}
                         />
                     </div>

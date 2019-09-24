@@ -1,5 +1,5 @@
 import React , {Component} from 'react';
-import TaskUI from '../components/tasks/TaskUI';
+import TaskUI from '../components/TaskUI';
 import firebase from 'firebase';
 
 export default class UpdateTask extends Component {

@@ -9,8 +9,6 @@ export default class Home extends Component {
         this.state = {
             tasks: []
         };
-        console.log('Hola');
-        console.log(this.props.tasks);
 
     }
     componentDidMount(){
@@ -35,7 +33,7 @@ export default class Home extends Component {
                             if (changeDoc.doc.data().archived) {
                                 this.setState({
                                     tasks: this.state.tasks.filter((task) => {
-                                        if (task.id == changeDoc.doc.id && !task.archived){
+                                        if (task.id === changeDoc.doc.id && !task.archived){
                                             return false;
                                         }
                                         return true;
@@ -45,7 +43,7 @@ export default class Home extends Component {
                             //Filtro para el cambio de estado de la tarea                   
                             this.setState({
                                 tasks: this.state.tasks.filter((task) => {
-                                    if (task.id == changeDoc.doc.id && task.state != changeDoc.doc.data().state){
+                                    if (task.id === changeDoc.doc.id && task.state !== changeDoc.doc.data().state){
                                         return false;
                                     }
                                     return true;
@@ -54,9 +52,11 @@ export default class Home extends Component {
                             break;
                     case 'removed':
                             this.setState({
-                                tasks: this.state.tasks.filter((task) => changeDoc.doc.id != task.id)
+                                tasks: this.state.tasks.filter((task) => changeDoc.doc.id !== task.id)
                             });
                             break;
+                    default:
+                        return;
             }})
         });
     }
@@ -73,24 +73,27 @@ export default class Home extends Component {
                     if (indexNew < states.length){
                         await taskRef.update({state: states[indexNew]})
                     }
-                    return;
+                    break;
                 case 'previous':
                     indexNew = indexOld -1;
                     if (indexNew >= 0){
                         await taskRef.update({state: states[indexNew]})
                     }
+                    break;
+                default:
+                    return;
             }
         }catch(err){
             console.log(err);
         }
     }
     removeTask = async (taskId) => {
-        var taskRef = await this.db.collection('tasks').doc(taskId).delete()
+        await this.db.collection('tasks').doc(taskId).delete()
             .then(() => console.log('Se elimino correctamente'))
             .catch((err) => console.log(err));
     }
     archivingTask = async (taskId) => {
-        var taskRef = await this.db.collection('tasks').doc(taskId)
+        await this.db.collection('tasks').doc(taskId)
             .set({archived: true}, { merge: true })
             .then(() => console.log('Se archivo correctamente'))
             .catch((err)  => console.log(err));

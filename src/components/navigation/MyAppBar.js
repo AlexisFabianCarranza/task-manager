@@ -1,28 +1,11 @@
-/*import React, {Component} from 'react';
-import AppBar from 'material-ui/AppBar';
-import FlatButton from 'material-ui/FlatButton';
-import {indigo600} from 'material-ui/styles/colors';
-
-
-export default class MyAppBar extends Component {
-    render(){
-        return(
-            <AppBar 
-                title="Task Manager"
-                style={{"backgroundColor": indigo600}}
-            >
-                <FlatButton>Hola</FlatButton>
-            </AppBar>
-        )
-    }
-}*/
-import React, {Component} from 'react';
+import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import FolderRoundedIcon from '@material-ui/icons/FolderRounded';
 import {Link} from 'react-router-dom';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
@@ -45,10 +28,13 @@ const useStyles = makeStyles(theme => ({
     containerItemsRight: {
       display: 'flex',
       flexDirection: 'row-reverse',
-      flex: 1,
+      flex: 4,
       paddingRight: '7%',
     },
     containerItemsLeft: {
+      display: 'flex',
+      flex: 1,
+      justifyContent: 'space-evenly',
       paddingLeft: '3%',
     }
   }));
@@ -76,6 +62,11 @@ export default (props) => {
                   <Link to='/'>
                     <IconButton>
                       <HomeRoundedIcon style={{color: '#FFFFFF'}}/>
+                    </IconButton>
+                  </Link>
+                  <Link to='/archivedTasks'>
+                    <IconButton>
+                      <FolderRoundedIcon style={{color: '#FFFFFF'}}/>
                     </IconButton>
                   </Link>
                   

@@ -1,7 +1,8 @@
 import React,{Component} from 'react';
 import Home from './pages/home';
-import AddTask from './pages/AddTask';
-import UpdateTask from './pages/UpdateTask';
+import AddTask from './pages/addTask';
+import UpdateTask from './pages/updateTask';
+import ArchivedTasks from './pages/archivedTasks';
 import App from '../src/App';
 
 import {
@@ -19,6 +20,7 @@ import {
                     <Route path="/addTask" component={AddTask}></Route>
                     <Route path="/updateTask/:idTask" component={UpdateTask}></Route>
                     <Route path="/updateTask" component={UpdateTask}></Route>
+                    <Route path="/archivedTasks" component={ArchivedTasks}></Route>
                 </App>
             </ReactRouter>
         )

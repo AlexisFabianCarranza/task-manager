@@ -1,12 +1,12 @@
 import React , {Component} from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Title from '../Title';
+import Title from '../components/utilites/Title';
 import Select from '@material-ui/core/Select';
 import MenuItem from "@material-ui/core/MenuItem";
-import States from '../../utilities/states';
+import States from '../utilities/states';
 import { Redirect } from 'react-router';
-import '../../styles/task.css';
+import '../styles/task.css';
 
 export default class TaskUI extends Component {
     constructor(props){
@@ -80,7 +80,6 @@ export default class TaskUI extends Component {
                             variant='outlined'
                             value={this.state.state}
                             onChange={(text)=> this.setState({state: text.target.value})}
-                            className='select'
                         >
                             <MenuItem value={States.toDo}>{States.toDo}</MenuItem>
                             <MenuItem value={States.inProgress}>{States.inProgress}</MenuItem>
