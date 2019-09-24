@@ -20,8 +20,6 @@ export default class UpdateTask extends Component {
     }
     updateTask = async (task) => {
         try{
-            console.log(task);
-            console.log("ES LO QUE LLEGO");
             var taskRef = this.db.collection('tasks').doc(task.id);
             await taskRef.update({
                 title: task.title,
