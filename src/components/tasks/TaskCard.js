@@ -20,6 +20,9 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         flexFlow: 'row',
     },
+    cardContent: {
+        borderRadius: '15px',
+    },
     card: {
         padding: '2%'
     },
@@ -42,28 +45,27 @@ const useStyles = makeStyles(theme => ({
     }
   }));
 
-export const Archived =  (props) => {
-    if (props.enabledArchiving) {
-        return (
-         <IconButton
-             color="inherit"
-             style={{color: '#000000'}}
-             onClick={()=>props.archivingTask(props.id)}
-         >
-             <FolderRoundedIcon />
-         </IconButton>
-        )
+const colorTask = (state) => {
+    console.log(state);
+    switch (States.arrayStates().indexOf(state)) {
+        case 0: 
+            return {border: '2px solid #e57373'}
+        case 1:
+            return {border: '2px solid #ffb74d'}
+        case 2:
+            return {border: '2px solid #aed581'}
+        default: 
+            return ""
     }
-    return <div></div>;
 }
-
 export default (props) => {
         const classes = useStyles();
         const task = props.task;
         const isLastState = (States.arrayStates().indexOf(task.state)=== States.arrayStates().length-1) ? true : false;
         const isFirstState =  (States.arrayStates().indexOf(task.state)=== 0) ? true : false;
+        console.log(colorTask(task.state));
         return(
-            <Card >
+            <Card className={classes.cardContent} style={colorTask(task.state)}>
                 <div className={classes.container}>
                     <CardActions>
                         <IconButton
@@ -109,12 +111,11 @@ export default (props) => {
                                 <CreateRoundedIcon></CreateRoundedIcon>
                             </IconButton>
                         </Link> 
-                        <Archived enabledArchiving={isLastState}/>
                     </div>
                     <div className={classes.leftIcons}>
                         <IconButton
                             color="inherit"
-                            onClick={()=>task.removeTask(task.id)}
+                            onClick={()=>props.removeTask(task.id)}
                         >
                             <DeleteIcon />
                         </IconButton>

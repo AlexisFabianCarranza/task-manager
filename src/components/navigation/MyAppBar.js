@@ -32,9 +32,6 @@ const useStyles = makeStyles(theme => ({
       paddingRight: '7%',
     },
     containerItemsLeft: {
-      display: 'flex',
-      flex: 1,
-      justifyContent: 'space-evenly',
       paddingLeft: '3%',
     }
   }));
@@ -45,15 +42,7 @@ export default (props) => {
       <div className={classes.root}>
         <AppBar position="static">
             <Toolbar>
-                <IconButton
-                    edge="start"
-                    className={classes.menuButton}
-                    color="inherit"
-                    aria-label="open drawer"
-                >
-                    <MenuIcon style={{color: '#FFFFFF'}}/>
-                </IconButton>
-                <Link to='/' style={{textDecoration: 'none', color:'inherit'}}>
+                <Link to='/' style={{textDecoration: 'none', color:'inherit', paddingLeft: '4%'}}>
                   <Typography className={classes.title} variant="h6" noWrap>
                     Task Manager
                   </Typography>
@@ -62,11 +51,6 @@ export default (props) => {
                   <Link to='/'>
                     <IconButton>
                       <HomeRoundedIcon style={{color: '#FFFFFF'}}/>
-                    </IconButton>
-                  </Link>
-                  <Link to='/archivedTasks'>
-                    <IconButton>
-                      <FolderRoundedIcon style={{color: '#FFFFFF'}}/>
                     </IconButton>
                   </Link>
                   

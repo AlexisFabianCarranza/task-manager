@@ -8,6 +8,7 @@
 
 .tableDivisor {
     background-color: #fff59d;
+    border-radius: 15px 50px;
     display: flex;
     width: 25%;
     height: 75%;
@@ -27,7 +28,6 @@
 }
 
 .task-container {
-    background-color: red;
     display: flex;
     flex-direction: center;
     flex: 1;
