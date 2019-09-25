@@ -13,6 +13,12 @@ export default class AuthenticatorUI extends Component {
             password: '',
         }
     }
+    login = () =>{
+        this.props.login(this.state.email,this.state.password);
+    }
+    signUp = () =>{
+        this.props.signUp(this.state.email, this.state.password);
+    }
     render(){
         return(
             <div className={'container'}>
@@ -49,7 +55,7 @@ export default class AuthenticatorUI extends Component {
                                     variant="contained" 
                                     color="secondary"
                                     size="small"
-                                    onClick={()=>console.log("se presiono " + this.state.user + this.state.password)}
+                                    onClick={this.login}
                                 >
                                     Login
                                 </Button>
@@ -58,7 +64,7 @@ export default class AuthenticatorUI extends Component {
                                     variant="contained" 
                                     color="secondary"
                                     size="small"
-                                    onClick={()=>console.log("se presiono")}
+                                    onClick={this.signUp}
                                 >
                                     Create Account
                                 </Button>   
@@ -73,7 +79,7 @@ export default class AuthenticatorUI extends Component {
                                     size="small"
                                     onClick={()=>console.log("se presiono")}
                                 >
-                                    Development Mode
+                                    Test Mode
                             </Button>   
                         </div>  
                         

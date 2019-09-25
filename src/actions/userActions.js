@@ -4,3 +4,7 @@ export function login(User){
         User
     }
 }
+
+export function logout(){
+    return {type: 'LOG_OUT'}
+}
