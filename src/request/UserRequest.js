@@ -5,7 +5,7 @@ export async function Login(email,password) {
         let response = await firebase.auth().signInWithEmailAndPassword(email, password);
         let {user} = response;
         console.log("Se realizo Login correctamente");
-        return user.email;
+        return {id: user.uid, email: user.email};
     }catch(err){
         console.log(err);
     } 
@@ -21,7 +21,7 @@ export async function  SignUp(email,password) {
             email: user.email
         });
         console.log("Se creo Usuario correctamente");
-        return user.email;
+        return {id: user.uid, email: user.email};
     }catch(err){
         console.log(err);
     } 

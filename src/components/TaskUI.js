@@ -35,7 +35,13 @@ export default class TaskUI extends Component {
             });
             return;
         }
-        this.props.mainAction(this.state);
+        let task = {
+            title: this.state.title,
+            description: this.state.description,
+            id: this.state.id,
+            state:this.state.state,
+        }
+        this.props.mainAction();
         this.setState({
             redirectHome: true,
         });

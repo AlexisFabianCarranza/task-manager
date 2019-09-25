@@ -7,10 +7,15 @@ import {connect} from 'react-redux';
  class AddTask extends Component {
     componentDidMount(){
         this.db = firebase.firestore();
+        console.log(this.props.user.user.id);
     }
-    saveTask = (task) => {
-        var saveTask = saveTask.bind(this);
-        saveTask(task);
+    saveTask = async (task) => {
+        try{
+            await this.db.collection('users').doc(this.props.user.user.id).collection('tasks').add({task})
+            console.log("Se almaceno correctamente la tarea");
+        }catch(err){
+            console.log(err);
+        }
     }
     render() {
         return(
@@ -24,7 +29,8 @@ import {connect} from 'react-redux';
 }
 function mapStateToProps(state, ownProps){
     return {
-        tasks: state.tasks
+        tasks: state.tasks,
+        user: state.user
     }
 }
 export default connect(mapStateToProps)(AddTask);

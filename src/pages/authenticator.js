@@ -16,14 +16,14 @@ class Authenticator extends Component{
     }
     login = (email, password) => {
         let user = Login(email,password);
-        user.then((userEmail) =>{
-            this.props.dispatch(actions.login(userEmail))
+        user.then((item) =>{
+            this.props.dispatch(actions.login(item))
         });
     }
     signUp = (email, password) => {
         let user = SignUp(email,password)
-        user.then((userEmail) =>{
-            this.props.dispatch(actions.login(userEmail))
+        user.then((item) =>{
+            this.props.dispatch(actions.login(item))
         });
     }
     render(){
