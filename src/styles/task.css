@@ -1,4 +1,4 @@
-.container {
+.containerTask {
     display: flex;
     flex-flow: row-reverse;
     justify-content: center;
@@ -6,7 +6,7 @@
     height: 100vh;
 }
 
-.container-form {
+.container-form-task {
     background-color: white;
     display: flex;
     width: 60%;

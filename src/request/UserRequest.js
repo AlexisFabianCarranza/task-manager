@@ -1,6 +1,6 @@
 import firebase from 'firebase';
 
-export async function  Login(email,password) {
+export async function Login(email,password) {
     try {
         let response = await firebase.auth().signInWithEmailAndPassword(email, password);
         let {user} = response;

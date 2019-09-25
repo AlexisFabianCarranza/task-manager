@@ -3,6 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Title from '../components/utilites/Title';
 import ImgTasks from '../imgs/tasks.png';
+import { Redirect } from 'react-router';
 import '../styles/auth.css';
 
 export default class AuthenticatorUI extends Component {
@@ -11,15 +12,25 @@ export default class AuthenticatorUI extends Component {
         this.state = {
             user: '',
             password: '',
+            redirectHome: false,
         }
     }
     login = () =>{
+        this.setState({
+            redirectHome: true,
+        });
         this.props.login(this.state.email,this.state.password);
     }
     signUp = () =>{
+        this.setState({
+            redirectHome: true,
+        });
         this.props.signUp(this.state.email, this.state.password);
     }
     render(){
+        if (this.state.redirectHome){
+            return <Redirect push to="/" />;
+        }
         return(
             <div className={'container'}>
                     <div className={'container-form'}>

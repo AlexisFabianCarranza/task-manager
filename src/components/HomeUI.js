@@ -41,7 +41,7 @@ export default (props) =>{
     };
     const classes = useStyles();
     return(
-        <div className='container'>
+        <div className='containerHome'>
             <div className='tableDivisor'>
                 <div className='tasks'>
                     <Title title={States.toDo}/>

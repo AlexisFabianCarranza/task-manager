@@ -1,18 +1,16 @@
 import React , {Component} from 'react';
 import TaskUI from '../components/TaskUI';
 import firebase from 'firebase';
+import {saveTask} from '../request/TasksRequest';
+import {connect} from 'react-redux';
 
-export default class AddTask extends Component {
+ class AddTask extends Component {
     componentDidMount(){
         this.db = firebase.firestore();
     }
-    saveTask = async (task) => {
-        try{
-            await this.db.collection('tasks').add({...task, archived: false})
-            console.log("Se almaceno correctamente la tarea");
-        }catch(err){
-            console.log(err);
-        }
+    saveTask = (task) => {
+        var saveTask = saveTask.bind(this);
+        saveTask(task);
     }
     render() {
         return(
@@ -24,3 +22,9 @@ export default class AddTask extends Component {
         )
     }
 }
+function mapStateToProps(state, ownProps){
+    return {
+        tasks: state.tasks
+    }
+}
+export default connect(mapStateToProps)(AddTask);

@@ -1,6 +1,13 @@
-export function loadTask(tasks){
+export function addTask(task){
     return {
-        type: 'LOAD_TASK',
-        tasks
+        type: 'ADD_TASK',
+        task
+    }
+}
+
+export function filterTask(taskId){
+    return {
+        type: 'FILTER_TASK',
+        taskId
     }
 }

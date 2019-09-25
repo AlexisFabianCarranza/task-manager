@@ -45,8 +45,8 @@ export default class TaskUI extends Component {
             return <Redirect push to="/" />;
         }
         return(
-            <div className={'container'}>
-                <div className={'container-form'}>
+            <div className={'containerTask'}>
+                <div className={'container-form-task'}>
                     <Title title={this.props.title}/>
                     <TextField
                         helperText={(this.state.validTitle) ? '' : 'Required. Max lenght 30 letters'}
@@ -100,8 +100,3 @@ export default class TaskUI extends Component {
         )
     }
 }
-/*
-<Link to='/' style={{textDecoration: 'none'} }>
-                            
-                        </Link>
-*/

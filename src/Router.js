@@ -13,7 +13,7 @@ import {
 
 class Router extends Component{
     signedInRoutes(){
-        if (false){//this.props.user){
+        if (this.props.user){
             return (
                 <div>
                     <Route path="/addTask" component={AddTask}></Route>
@@ -24,7 +24,8 @@ class Router extends Component{
         }
     }
     home(){
-        if(false) return Home;//this.props.user) return Home;
+        console.log(this.props.user);
+        if(JSON.stringify(this.props.user)!=='{}') return Home;
         return Authenticator;
     }
     render(){
