@@ -9,7 +9,6 @@ class Navigation extends Component {
         super(props);
         this.goHome = this.goHome.bind(this);
         this.logout = this.logout.bind(this);
-        console.log(this.props.user);
     }
     goHome(){
         this.props.dispatch(push('/'))

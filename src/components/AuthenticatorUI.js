@@ -19,7 +19,7 @@ export default class AuthenticatorUI extends Component {
         this.setState({
             redirectHome: true,
         });
-        this.props.login(this.state.email,this.state.password);
+        this.props.login(this.state.email, this.state.password);
     }
     signUp = () =>{
         this.setState({

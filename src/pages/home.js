@@ -4,6 +4,7 @@ import firebase from 'firebase';
 import {connect} from 'react-redux';
 import States from '../utilities/states';
 import {addTask, filterTask} from '../actions/tasksActions';
+import * as actions from '../actions/userActions';
 
 class Home extends Component {
     constructor(props) {
@@ -11,31 +12,35 @@ class Home extends Component {
         this.state = {
             tasks: []
         };
-        console.log(this.props.tasks);
+        this.db = firebase.firestore();
+        //this.props.dispatch(actions.login({email: 'alexis1010@gmail.com', id: 'mVRK2CpWqyO7jjDG8ZhU6iM1Nmc2'}));   
+
+    }
+    componentWillUnmount(){
+        //this.props.dispatch()
     }
     componentDidMount(){
-        this.db = firebase.firestore();
-        this.readTasks();
+        if (this.props.tasks.length === 0 ){
+            this.readTasks();
+        }
     }
     readTasks = async () => {
-        let tasksCollection = await this.db.collection('users').doc(this.props.user.user.id).collection('tasks');
+        let tasksCollection = await this.db.collection('users').doc(this.props.user.id).collection('tasks');
         tasksCollection.onSnapshot((querySnapshot) => {
             querySnapshot.docChanges().forEach((changeDoc) =>{
-                
+                let newTask;
                 switch(changeDoc.type){
                     case 'added':
-                        /*let task = {
-                            id: changeDoc.doc.id,
-                            title: changeDoc.doc.data().title,
-                            description: changeDoc.doc.data().title,
-                        }*/
-                        this.props.dispatch(addTask({...changeDoc.doc.data().task ,id: changeDoc.doc.id}));
+                        newTask = {...changeDoc.doc.data(),id: changeDoc.doc.id};
+                        this.props.dispatch(addTask(newTask));
                         break;
                     case 'modified':
                         //Filtro la tarea del estado anterior
                         this.props.dispatch(filterTask(changeDoc.doc.id));
                         //Agrego la tarea con el nuevo estado
-                        this.props.dispatch(addTask({...changeDoc.doc.data() ,id: changeDoc.doc.id})); 
+                        newTask = {...changeDoc.doc.data(),id: changeDoc.doc.id};
+                        this.props.dispatch(addTask(newTask));
+                        debugger
                         break;
                     case 'removed':
                         this.props.dispatch(filterTask(changeDoc.doc.id))
@@ -44,12 +49,11 @@ class Home extends Component {
                         return;
             }})
         });
-        console.log(this.props.user);
     }
     taskUpdate = async (taskId, taskState ,action) => {
         //Task: id de la tarea - action: next o previous
         try {
-            var taskRef = this.db.collection('tasks').doc(taskId);
+            var taskRef = this.db.collection('users').doc(this.props.user.id).collection('tasks').doc(taskId);
             var states = States.arrayStates();
             let indexOld = states.indexOf(taskState);
             let indexNew;
@@ -74,7 +78,7 @@ class Home extends Component {
         }
     }
     removeTask = async (taskId) => {
-        await this.db.collection('tasks').doc(taskId).delete()
+        await this.db.collection('users').doc(this.props.user.id).collection('tasks').doc(taskId).delete()
             .then(() => console.log('Se elimino correctamente'))
             .catch((err) => console.log(err));
     }

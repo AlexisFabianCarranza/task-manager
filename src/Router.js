@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import Home from './pages/home';
-import AddTask from './pages/addTask';
-import UpdateTask from './pages/updateTask';
+import AddTask from './pages/AddTask';
+import UpdateTask from './pages/UpdateTask';
 import App from '../src/App';
 import Authenticator from './pages/authenticator';
 import {connect} from 'react-redux';
@@ -24,8 +24,8 @@ class Router extends Component{
         }
     }
     home(){
-        console.log(this.props.user);
         if(JSON.stringify(this.props.user)!=='{}') return Home;
+        //if(true) return Home;
         return Authenticator;
     }
     render(){
