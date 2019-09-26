@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { ThemeProvider } from '@material-ui/styles';
 import './App.css';
-import MyAppBar from './components/navigation/MyAppBar';
+import Navigation from './components/navigation/Navigation';
 import { createMuiTheme } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
@@ -16,8 +16,8 @@ class App extends Component {
   render(){
     return (
       <ThemeProvider  theme={theme}>
+        <Navigation />
         <div>
-          <MyAppBar />
           {this.props.children}
         </div>
       </ThemeProvider > 

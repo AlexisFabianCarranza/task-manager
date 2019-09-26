@@ -46,7 +46,6 @@ const useStyles = makeStyles(theme => ({
   }));
 
 const colorTask = (state) => {
-    console.log(state);
     switch (States.arrayStates().indexOf(state)) {
         case 0: 
             return {border: '2px solid #e57373'}
@@ -63,7 +62,6 @@ export default (props) => {
         const task = props.task;
         const isLastState = (States.arrayStates().indexOf(task.state)=== States.arrayStates().length-1) ? true : false;
         const isFirstState =  (States.arrayStates().indexOf(task.state)=== 0) ? true : false;
-        console.log(colorTask(task.state));
         return(
             <Card className={classes.cardContent} style={colorTask(task.state)}>
                 <div className={classes.container}>

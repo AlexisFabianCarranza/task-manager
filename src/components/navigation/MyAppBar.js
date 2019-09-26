@@ -2,14 +2,14 @@ import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
-import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import FolderRoundedIcon from '@material-ui/icons/FolderRounded';
 import {Link} from 'react-router-dom';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
+import MenuIcon from '@material-ui/icons/Menu';
+import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -35,6 +35,20 @@ const useStyles = makeStyles(theme => ({
       paddingLeft: '3%',
     }
   }));
+const addTaskIcon = (user,logout) => {
+  return (JSON.stringify(user)!=='{}') ?
+      <div >
+        <Link to='/AddTask'>
+          <Fab color="secondary" aria-label="add" size="small" >
+            <AddIcon style={{color: '#FFFFFF'}}/>
+          </Fab>
+        </Link>
+        <IconButton onClick={()=>logout()}>
+          <PowerSettingsNewIcon style={{color: '#FFFFFF'}}/>
+        </IconButton>
+      </div>:
+      null;
+}
 
 export default (props) => {
     const classes = useStyles();
@@ -42,28 +56,30 @@ export default (props) => {
       <div className={classes.root}>
         <AppBar position="static">
             <Toolbar>
-                <Link to='/' style={{textDecoration: 'none', color:'inherit', paddingLeft: '4%'}}>
+              <IconButton
+                edge="start"
+                className={classes.menuButton}
+                color="inherit"
+                aria-label="open drawer"
+               >
+                <MenuIcon />
+              </IconButton>
+                <IconButton onClick={()=>props.goHome()}>
                   <Typography className={classes.title} variant="h6" noWrap>
                     Task Manager
                   </Typography>
-                </Link>
+                </IconButton>
                 <div className={classes.containerItemsLeft}>
-                  <Link to='/'>
-                    <IconButton>
-                      <HomeRoundedIcon style={{color: '#FFFFFF'}}/>
-                    </IconButton>
-                  </Link>
+                  <IconButton onClick={()=>props.goHome()}>
+                    <HomeRoundedIcon style={{color: '#FFFFFF'}}/>
+                  </IconButton>
                   
                 </div>
                 <div className={classes.containerItemsRight}>
-                  
-                  <Link to='/AddTask'>
-                    <Fab color="secondary" aria-label="add" size="small" >
-                      <AddIcon style={{color: '#FFFFFF'}}/>
-                    </Fab>
-                  </Link>                    
-                  
+                  {addTaskIcon(props.user,props.logout)}
                 </div>
+                
+                
             </Toolbar>
         </AppBar>
       </div>

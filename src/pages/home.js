@@ -1,60 +1,46 @@
 import React, {Component} from 'react';
 import HomeUI from '../components/HomeUI';
 import firebase from 'firebase';
+import {connect} from 'react-redux';
 import States from '../utilities/states';
+import {addTask, filterTask, clearTasks} from '../actions/tasksActions';
 
-export default class Home extends Component {
+class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
             tasks: []
         };
-
+        this.flag = true;
+        this.db = firebase.firestore();
     }
     componentDidMount(){
-        this.db = firebase.firestore();
-        this.readTasks();
+        if (this.flag ){
+            this.flag = false;
+            this.readTasks();
+        }
     }
-    readTasks = async () => {
-        let tasksCollection = await this.db.collection('tasks');
+    readTasks = () => {
+        let tasksCollection = this.db.collection('users').doc(this.props.user.id).collection('tasks');
         tasksCollection.onSnapshot((querySnapshot) => {
             querySnapshot.docChanges().forEach((changeDoc) =>{
+                let newTask;
                 switch(changeDoc.type){
                     case 'added':
-                            this.setState({
-                                tasks: this.state.tasks.concat({...changeDoc.doc.data() ,id: changeDoc.doc.id})
-                            });
-                            break;
+                        this.props.dispatch(filterTask(changeDoc.doc.id));
+                        newTask = {...changeDoc.doc.data(),id: changeDoc.doc.id};
+                        this.props.dispatch(addTask(newTask));
+                        break;
                     case 'modified':
-                            this.setState({
-                                tasks: this.state.tasks.concat({...changeDoc.doc.data() ,id: changeDoc.doc.id})
-                            }); 
-                            //Filtro para el archivado de la tarea
-                            if (changeDoc.doc.data().archived) {
-                                this.setState({
-                                    tasks: this.state.tasks.filter((task) => {
-                                        if (task.id === changeDoc.doc.id && !task.archived){
-                                            return false;
-                                        }
-                                        return true;
-                                    })
-                                });
-                            }
-                            //Filtro para el cambio de estado de la tarea                   
-                            this.setState({
-                                tasks: this.state.tasks.filter((task) => {
-                                    if (task.id === changeDoc.doc.id && task.state !== changeDoc.doc.data().state){
-                                        return false;
-                                    }
-                                    return true;
-                                })
-                            });
-                            break;
+                        //Filtro la tarea del estado anterior
+                        this.props.dispatch(filterTask(changeDoc.doc.id));
+                        //Agrego la tarea con el nuevo estado
+                        newTask = {...changeDoc.doc.data(),id: changeDoc.doc.id};
+                        this.props.dispatch(addTask(newTask));
+                        break;
                     case 'removed':
-                            this.setState({
-                                tasks: this.state.tasks.filter((task) => changeDoc.doc.id !== task.id)
-                            });
-                            break;
+                        this.props.dispatch(filterTask(changeDoc.doc.id))
+                        break;
                     default:
                         return;
             }})
@@ -63,7 +49,7 @@ export default class Home extends Component {
     taskUpdate = async (taskId, taskState ,action) => {
         //Task: id de la tarea - action: next o previous
         try {
-            var taskRef = this.db.collection('tasks').doc(taskId);
+            var taskRef = this.db.collection('users').doc(this.props.user.id).collection('tasks').doc(taskId);
             var states = States.arrayStates();
             let indexOld = states.indexOf(taskState);
             let indexNew;
@@ -88,7 +74,7 @@ export default class Home extends Component {
         }
     }
     removeTask = async (taskId) => {
-        await this.db.collection('tasks').doc(taskId).delete()
+        await this.db.collection('users').doc(this.props.user.id).collection('tasks').doc(taskId).delete()
             .then(() => console.log('Se elimino correctamente'))
             .catch((err) => console.log(err));
     }
@@ -101,7 +87,7 @@ export default class Home extends Component {
     render(){
         return(
             <HomeUI 
-                tasks={this.state.tasks}
+                tasks={this.props.tasks}
                 taskUpdate={this.taskUpdate}    
                 removeTask={this.removeTask}
                 archivingTask={this.archivingTask}
@@ -110,3 +96,10 @@ export default class Home extends Component {
     }
 }
 
+function mapStateToProps(state, ownProps){
+    return {
+        tasks: state.tasks,
+        user: state.user,
+    }
+}
+export default connect(mapStateToProps)(Home);

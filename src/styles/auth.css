@@ -1,4 +1,4 @@
-.containerTask {
+.container {
     display: flex;
     flex-flow: row-reverse;
     justify-content: center;
@@ -6,16 +6,28 @@
     height: 100vh;
 }
 
-.container-form-task {
+.container-form {
     background-color: white;
     display: flex;
     width: 60%;
     height: 80%;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     padding: 20px 10px 10px 10px;
 }
 
+.content-text {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+}
+.content-img {
+    display:flex;
+    height: 50vh;
+    background-position: center;
+    flex-direction: column;
+}
 
 .text-field{
     width: 50%;
@@ -33,6 +45,7 @@
 }
 
 .form-horizontal {
+    margin-top: 5%;
     width: 50%;
     display: flex;
     justify-content: space-evenly;

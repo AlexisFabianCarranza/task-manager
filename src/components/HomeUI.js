@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
 export default (props) =>{
     let showTasks = (state) => {
         return props.tasks.map(task => {
-            if (task.state === state && task.archived === false) {
+            if (task.state === state) {
                 return (
                     <div className={classes.card} key={task.id}>
                         <TaskCard 
@@ -41,7 +41,7 @@ export default (props) =>{
     };
     const classes = useStyles();
     return(
-        <div className='container'>
+        <div className='containerHome'>
             <div className='tableDivisor'>
                 <div className='tasks'>
                     <Title title={States.toDo}/>
