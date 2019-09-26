@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
   }));
 const addTaskIcon = (user,logout) => {
   return (JSON.stringify(user)!=='{}') ?
-      <div>
+      <div >
         <Link to='/AddTask'>
           <Fab color="secondary" aria-label="add" size="small" >
             <AddIcon style={{color: '#FFFFFF'}}/>

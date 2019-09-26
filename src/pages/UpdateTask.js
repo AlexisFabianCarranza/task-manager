@@ -1,8 +1,9 @@
 import React , {Component} from 'react';
 import TaskUI from '../components/TaskUI';
 import firebase from 'firebase';
+import {connect} from 'react-redux';
 
-export default class UpdateTask extends Component {
+class UpdateTask extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -20,7 +21,7 @@ export default class UpdateTask extends Component {
     }
     updateTask = async (task) => {
         try{
-            var taskRef = this.db.collection('tasks').doc(task.id);
+            var taskRef = this.db.collection('users').doc(this.props.user.id).collection('tasks').doc(task.id);
             await taskRef.update({
                 title: task.title,
                 description: task.description,
@@ -32,23 +33,18 @@ export default class UpdateTask extends Component {
         }
     }
     readTaskAndUpdateState = async () => {
-        let taskRef = await this.db.collection('tasks').doc(this.idTask);
-        taskRef.get().then((task) => {
-            if (task.exists) {
+        console.log(this.props.tasks);
+        this.props.tasks.map((task)=> {
+            if (task.id === this.idTask){
                 console.log("Documento recibido");
                 this.setState({
-                    title: task.data().title,
-                    description: task.data().description,
-                    state: task.data().state,
+                    title: task.title,
+                    description: task.description,
+                    state: task.state,
                     id: task.id,
                 });
-            } else {
-                console.log("No se encontro el documento");
             }
-        }).catch((err) => {
-            console.log("err");
-        });
-
+        })
     }
     render() {
         return(
@@ -64,3 +60,12 @@ export default class UpdateTask extends Component {
         )
     }
 }
+
+function mapStateToProps(state, ownProps){
+    return {
+        tasks: state.tasks,
+        user: state.user,
+    }
+}
+
+export default connect(mapStateToProps)(UpdateTask)
