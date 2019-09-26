@@ -4,6 +4,11 @@ import Button from '@material-ui/core/Button';
 import Title from '../components/utilites/Title';
 import ImgTasks from '../imgs/tasks.png';
 import { Redirect } from 'react-router';
+import {
+    BrowserRouter as ReactRouter,
+    Route,
+    Link
+  } from 'react-router-dom';
 import '../styles/auth.css';
 
 export default class AuthenticatorUI extends Component {
@@ -16,16 +21,15 @@ export default class AuthenticatorUI extends Component {
         }
     }
     login = () =>{
-        this.setState({
-            redirectHome: true,
-        });
         this.props.login(this.state.email, this.state.password);
     }
     signUp = () =>{
-        this.setState({
-            redirectHome: true,
-        });
         this.props.signUp(this.state.email, this.state.password);
+        if (this.props.isLogin){
+            this.setState({
+                redirectHome: true
+            });
+        }
     }
     render(){
         if (this.state.redirectHome){
@@ -35,7 +39,12 @@ export default class AuthenticatorUI extends Component {
             <div className={'container'}>
                     <div className={'container-form'}>
                         <div className={'content-text'}>
-                            <Title title='Login'/>
+                            <Route path="/" exact render={()=>{
+                                return <Title title='Login'/>
+                            }}></Route>
+                            <Route path="/signup" exact render={()=>{
+                                return <Title title='Sign Up'/>
+                            }}></Route>
                             <TextField
                                 className="text-field"
                                 variant="outlined"
@@ -61,25 +70,39 @@ export default class AuthenticatorUI extends Component {
                                 }}
                             />
                             <div className='form-horizontal'>
-                                <Button 
-                                    className='button'
-                                    variant="contained" 
-                                    color="secondary"
-                                    size="small"
-                                    onClick={this.login}
-                                >
-                                    Login
-                                </Button>
-                                <Button 
-                                    className='button'
-                                    variant="contained" 
-                                    color="secondary"
-                                    size="small"
-                                    onClick={this.signUp}
-                                >
-                                    Create Account
-                                </Button>   
+                                <Route path="/" exact render={()=>{
+                                    return < Button 
+                                                className='button'
+                                                variant="contained" 
+                                                color="secondary"
+                                                size="small"
+                                                onClick={this.login}
+                                            >
+                                                Login
+                                            </Button>
+                                }}></Route>
+                                <Route path="/signup" exact render={()=>{
+                                    return  <Button 
+                                                className='button'
+                                                variant="contained" 
+                                                color="secondary"
+                                                size="small"
+                                                onClick={this.signUp}
+                                                >
+                                                Sign Up
+                                            </Button>  
+                                }}></Route>
                             </div>
+                            <Route path="/" exact render={()=>{
+                                    return  <Link to="/signup">
+                                                <p>Create Account</p> 
+                                            </Link> 
+                                }}></Route>
+                            <Route path="/signup" exact render={()=>{
+                                    return  <Link to="/">
+                                                <p>Login</p>
+                                            </Link>   
+                                }}></Route>
                         </div>  
                         <div className='content-img'>
                             <img src={ImgTasks} />
@@ -88,7 +111,7 @@ export default class AuthenticatorUI extends Component {
                                     variant="outlined" 
                                     color="secondary"
                                     size="small"
-                                    onClick={()=>console.log("se presiono")}
+                                    onClick={()=>this.props.testMode()}
                                 >
                                     Test Mode
                             </Button>   

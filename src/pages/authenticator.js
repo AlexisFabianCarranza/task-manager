@@ -3,6 +3,7 @@ import AuthenticatorUI from '../components/AuthenticatorUI';
 import {connect} from 'react-redux';
 import {Login, SignUp} from '../request/UserRequest';
 import * as actions from '../actions/userActions';
+import firebase from 'firebase';
 
 class Authenticator extends Component{
     constructor(props){
@@ -12,16 +13,33 @@ class Authenticator extends Component{
             email: '',
             password: '',
         };
-        console.log(props.user);
     }
-    login = (email, password) => {
-        let user = Login(email,password);
-        user.then((item) =>{
-            this.props.dispatch(actions.login(item))
-        });
+    login = async (email, password) => {
+        //return <Redirect push to="/" />;
+        try {
+            let response = await firebase.auth().signInWithEmailAndPassword(email, password);
+            let {user} = response;
+            console.log("Se realizo Login correctamente");
+            this.props.dispatch(actions.login({id: user.uid, email: user.email}))
+        }catch(err){
+            console.log(err.message);
+        } 
+    }    
+    signUp = async (email, password) => {
+        try {
+            let response = await firebase.auth().createUserWithEmailAndPassword(email , password);
+            let {user} = response; //destructuring objetcts
+            await firebase.firestore().collection('users').doc(user.uid).set({
+                email: user.email
+            });
+            console.log("Se creo Usuario correctamente");
+            this.login(email, password);
+        }catch(err){
+            console.log(err);
+        }
     }
-    signUp = (email, password) => {
-        let user = SignUp(email,password)
+    testMode = () => {
+        let user = Login('test@gmail.com','test2019');
         user.then((item) =>{
             this.props.dispatch(actions.login(item))
         });
@@ -31,6 +49,8 @@ class Authenticator extends Component{
             <AuthenticatorUI 
                 login={this.login}
                 signUp={this.signUp}
+                testMode={this.testMode}
+                isLogin={(JSON.stringify(this.props.user)!=='{}')? false:true}
             />
 
         );

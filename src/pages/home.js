@@ -13,14 +13,10 @@ class Home extends Component {
         };
         this.flag = true;
         this.db = firebase.firestore();
-        //this.props.dispatch(actions.login({email: 'alexis1010@gmail.com', id: 'mVRK2CpWqyO7jjDG8ZhU6iM1Nmc2'}));   
     }
     componentDidMount(){
-        //if (this.props.tasks.length === 0 ){
-            console.log(this.props.tasks);
         if (this.flag ){
             this.flag = false;
-            console.log("SE EJECUTO ESTA BOSTA");
             this.readTasks();
         }
     }
@@ -89,7 +85,6 @@ class Home extends Component {
             .catch((err)  => console.log(err));
     }
     render(){
-        console.log(this.props.tasks);
         return(
             <HomeUI 
                 tasks={this.props.tasks}

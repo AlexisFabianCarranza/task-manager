@@ -24,9 +24,11 @@ class Router extends Component{
         }
     }
     home(){
-        if(JSON.stringify(this.props.user)!=='{}') return Home;
-        //if(true) return Home;
-        return Authenticator;
+        if(JSON.stringify(this.props.user)!=='{}') {
+            return Home;
+        }else {
+            return Authenticator;
+        }
     }
     render(){
         return (

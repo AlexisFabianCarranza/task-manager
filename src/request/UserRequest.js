@@ -4,12 +4,13 @@ export async function Login(email,password) {
     try {
         let response = await firebase.auth().signInWithEmailAndPassword(email, password);
         let {user} = response;
+        debugger
         console.log("Se realizo Login correctamente");
         return {id: user.uid, email: user.email};
     }catch(err){
         console.log(err);
+        return null;
     } 
-    return null;
 }
 
 
