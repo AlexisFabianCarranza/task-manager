@@ -3,8 +3,7 @@ import HomeUI from '../components/HomeUI';
 import firebase from 'firebase';
 import {connect} from 'react-redux';
 import States from '../utilities/states';
-import {addTask, filterTask} from '../actions/tasksActions';
-import * as actions from '../actions/userActions';
+import {addTask, filterTask, clearTasks} from '../actions/tasksActions';
 
 class Home extends Component {
     constructor(props) {
@@ -12,25 +11,27 @@ class Home extends Component {
         this.state = {
             tasks: []
         };
+        this.flag = true;
         this.db = firebase.firestore();
         //this.props.dispatch(actions.login({email: 'alexis1010@gmail.com', id: 'mVRK2CpWqyO7jjDG8ZhU6iM1Nmc2'}));   
-
-    }
-    componentWillUnmount(){
-        //this.props.dispatch()
     }
     componentDidMount(){
-        if (this.props.tasks.length === 0 ){
+        //if (this.props.tasks.length === 0 ){
+            console.log(this.props.tasks);
+        if (this.flag ){
+            this.flag = false;
+            console.log("SE EJECUTO ESTA BOSTA");
             this.readTasks();
         }
     }
-    readTasks = async () => {
-        let tasksCollection = await this.db.collection('users').doc(this.props.user.id).collection('tasks');
+    readTasks = () => {
+        let tasksCollection = this.db.collection('users').doc(this.props.user.id).collection('tasks');
         tasksCollection.onSnapshot((querySnapshot) => {
             querySnapshot.docChanges().forEach((changeDoc) =>{
                 let newTask;
                 switch(changeDoc.type){
                     case 'added':
+                        this.props.dispatch(filterTask(changeDoc.doc.id));
                         newTask = {...changeDoc.doc.data(),id: changeDoc.doc.id};
                         this.props.dispatch(addTask(newTask));
                         break;
@@ -40,7 +41,6 @@ class Home extends Component {
                         //Agrego la tarea con el nuevo estado
                         newTask = {...changeDoc.doc.data(),id: changeDoc.doc.id};
                         this.props.dispatch(addTask(newTask));
-                        debugger
                         break;
                     case 'removed':
                         this.props.dispatch(filterTask(changeDoc.doc.id))
@@ -89,6 +89,7 @@ class Home extends Component {
             .catch((err)  => console.log(err));
     }
     render(){
+        console.log(this.props.tasks);
         return(
             <HomeUI 
                 tasks={this.props.tasks}

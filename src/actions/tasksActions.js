@@ -11,3 +11,9 @@ export function filterTask(taskId){
         taskId
     }
 }
+
+export function clearTasks(){
+    return {
+        type: 'CLEAR_TASKS'
+    }
+}

@@ -3,7 +3,12 @@ export default function tasksReducer(state = [],action) {
         case 'ADD_TASK':
             return state.concat(action.task);
         case 'FILTER_TASK':
-            return state.filter((task) => action.taskId !== task.id );
+            let newState =  state.filter((task) => action.taskId !== task.id );
+            console.log(newState);
+            if (newState.length === 0) return [];
+            return newState;
+        case 'CLEAR_TASKS':
+            return [];
         default:
             return state;
     }

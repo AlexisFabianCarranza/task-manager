@@ -8,9 +8,9 @@ import {connect} from 'react-redux';
     componentDidMount(){
         this.db = firebase.firestore();
     }
-    saveTask = async (task) => {
+    saveTask = (task) => {
         try{
-            await this.db.collection('users').doc(this.props.user.id).collection('tasks').add(task)
+            this.db.collection('users').doc(this.props.user.id).collection('tasks').add(task)
             console.log("Se almaceno correctamente la tarea");
         }catch(err){
             console.log(err);
